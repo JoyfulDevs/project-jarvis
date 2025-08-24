@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: channel-config-service
+  labels:
+    app.kubernetes.io/name: channel-config
+    app.kubernetes.io/component: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: channel-config
+  ports:
+  - protocol: TCP
+    port: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: channel-config-deployment
+  labels:
+    app.kubernetes.io/name: channel-config
+    app.kubernetes.io/component: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: channel-config
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: channel-config
+    spec:
+      containers:
+      - name: channel-config
+        image: jh1104/channel-config:latest
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 100m
+          limits:
+            memory: 256Mi
+            cpu: 500m
+        env:
+        - name: REDIS_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: redis-addr

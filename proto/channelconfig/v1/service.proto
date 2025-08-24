@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package channelconfig.v1;
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/channelconfig";
+
+service ChannelConfigService {
+  rpc Subscribe(SubscribeRequest) returns (SubscribeResponse) {}
+  rpc Unsubscribe(UnsubscribeRequest) returns (UnsubscribeResponse) {}
+  rpc UnsubscribeAll(UnsubscribeAllRequest) returns (UnsubscribeAllResponse) {}
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {}
+  rpc ListChannelsByFeature(ListChannelsByFeatureRequest) returns (ListChannelsByFeatureResponse) {}
+}
+
+enum Feature {
+  FEATURE_UNSPECIFIED = 0;
+  FEATURE_DAILY_SCRUM = 1;
+  FEATURE_WEEKLY_REPORT = 2;
+}
+
+message SubscribeRequest {
+  string channel_id = 1;
+  Feature feature = 2;
+}
+
+message SubscribeResponse {
+  repeated Feature features = 1;
+}
+
+message UnsubscribeRequest {
+  string channel_id = 1;
+  Feature feature = 2;
+}
+
+message UnsubscribeResponse {
+  repeated Feature features = 1;
+}
+
+message UnsubscribeAllRequest {
+  string channel_id = 1;
+}
+
+message UnsubscribeAllResponse {}
+
+message ListSubscriptionsRequest {
+  string channel_id = 1;
+}
+
+message ListSubscriptionsResponse {
+  repeated Feature features = 1;
+}
+
+message ListChannelsByFeatureRequest {
+  Feature feature = 1;
+}
+
+message ListChannelsByFeatureResponse {
+  repeated string channel_ids = 1;
+}

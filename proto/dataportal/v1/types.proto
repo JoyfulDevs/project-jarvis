@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package dataportal.v1;
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/dataportal";
+
+message Holiday {
+  int32 year = 1;
+  int32 month = 2;
+  int32 day = 3;
+  string name = 4;
+}
+
+message Forecast {
+  // 200601021504 포맷의 예보 시간.
+  string time = 1;
+  // 기온 (섭씨).
+  int32 temperature = 2;
+  // 강수 형태 (비, 눈 등).
+  string precipitation = 3;
+  // 하늘 상태 (맑음, 흐림 등).
+  string sky = 4;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package aigateway.v1;
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/aigateway";
+
+service AIGatewayService {
+  rpc GenerateText(GenerateTextRequest) returns (GenerateTextResponse) {}
+}
+
+message GenerateTextRequest {
+  repeated string texts = 1;
+}
+
+message GenerateTextResponse {
+  string text = 1;
+}

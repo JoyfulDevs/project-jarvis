@@ -1,0 +1,27 @@
+name: Run tests
+
+on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+    - "**/*.md"
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    # https://github.com/actions/checkout
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # https://github.com/actions/setup-go
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: 'go.mod'
+
+    - name: Test
+      run: go test -race -v ./...
+

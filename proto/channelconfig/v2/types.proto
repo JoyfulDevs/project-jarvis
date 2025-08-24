@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package channelconfig.v2;
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/channelconfig";
+
+message ChannelConfig {
+  DailyScrumConfig daily_scrum = 1;
+  WeeklyReportConfig weekly_report = 2;
+}
+
+message DailyScrumConfig {
+  bool enabled = 1;
+}
+
+message WeeklyReportConfig {
+  bool enabled = 1;
+}

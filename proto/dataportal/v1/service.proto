@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package dataportal.v1;
+
+import "dataportal/v1/types.proto";
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/dataportal";
+
+service DataPortalService {
+  rpc ListHolidays(ListHolidaysRequest) returns (ListHolidaysResponse) {}
+  rpc GetUltraShortTermForecast(GetUltraShortTermForecastRequest) returns (GetUltraShortTermForecastResponse) {}
+}
+
+message ListHolidaysRequest {
+  int32 year = 1;
+  int32 month = 2;
+}
+
+message ListHolidaysResponse {
+  repeated Holiday holidays = 1;
+}
+
+message GetUltraShortTermForecastRequest {
+  int32 nx = 1;
+  int32 ny = 2;
+}
+
+message GetUltraShortTermForecastResponse {
+  repeated Forecast forecasts = 1;
+}

@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package jarvis.v1;
+
+option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/jarvis";
+
+service JarvisService {
+  rpc ListInvitedChannels(ListInvitedChannelsRequest) returns (ListInvitedChannelsResponse) {}
+  rpc SendSlackMessage(SendSlackMessageRequest) returns (SendSlackMessageResponse) {}
+  rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse) {}
+}
+
+message ListInvitedChannelsRequest {}
+
+message ListInvitedChannelsResponse {
+  repeated string channel_ids = 1;
+}
+
+message SendSlackMessageRequest {
+  string channel_id = 1;
+  string message = 2;
+  bytes blocks = 3;
+  bool markdown = 4;
+}
+
+message SendSlackMessageResponse {
+  double timestamp = 1;
+}
+
+message UserProfile {
+  string title = 1;
+  string display_name = 2;
+  string real_name = 3;
+  string first_name = 4;
+  string last_name = 5;
+  string email = 6;
+  string phone = 7;
+}
+
+message GetUserProfileRequest {
+  string user_id = 1;
+}
+
+message GetUserProfileResponse {
+  string user_id = 1;
+  UserProfile profile = 2;
+}
