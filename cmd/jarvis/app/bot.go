@@ -3,8 +3,8 @@ package app
 import (
 	"context"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/slack"
-	"github.com/genians/endpoint-lab-slack-bot/pkg/slack/bot"
+	"github.com/devafterdark/project-jarvis/pkg/slack"
+	"github.com/devafterdark/project-jarvis/pkg/slack/bot"
 )
 
 var _ bot.EventHandler = (*JarvisBot)(nil)

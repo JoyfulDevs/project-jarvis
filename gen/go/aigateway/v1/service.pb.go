@@ -7,11 +7,12 @@
 package aigateway
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -119,7 +120,7 @@ const file_aigateway_v1_service_proto_rawDesc = "" +
 	"\x14GenerateTextResponse\x12\x12\n" +
 	"\x04text\x18\x01 \x01(\tR\x04text2k\n" +
 	"\x10AIGatewayService\x12W\n" +
-	"\fGenerateText\x12!.aigateway.v1.GenerateTextRequest\x1a\".aigateway.v1.GenerateTextResponse\"\x00B;Z9github.com/genians/endpoint-lab-slack-bot/proto/aigatewayb\x06proto3"
+	"\fGenerateText\x12!.aigateway.v1.GenerateTextRequest\x1a\".aigateway.v1.GenerateTextResponse\"\x00B;Z9github.com/devafterdark/project-jarvis/proto/aigatewayb\x06proto3"
 
 var (
 	file_aigateway_v1_service_proto_rawDescOnce sync.Once

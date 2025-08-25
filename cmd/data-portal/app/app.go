@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/genians/endpoint-lab-slack-bot/service/dataportal/server"
+	"github.com/devafterdark/project-jarvis/service/dataportal/server"
 )
 
 func Run() {

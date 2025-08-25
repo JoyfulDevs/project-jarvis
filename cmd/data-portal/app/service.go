@@ -1,6 +1,6 @@
 package app
 
-import "github.com/genians/endpoint-lab-slack-bot/pkg/dataportal"
+import "github.com/devafterdark/project-jarvis/pkg/dataportal"
 
 type DataPortalService struct {
 	client *dataportal.Client

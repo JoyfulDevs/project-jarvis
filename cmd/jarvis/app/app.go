@@ -8,7 +8,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/genians/endpoint-lab-slack-bot/service/jarvis/server"
+	"github.com/devafterdark/project-jarvis/service/jarvis/server"
 )
 
 func Run() {

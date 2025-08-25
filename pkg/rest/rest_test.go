@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/rest"
+	"github.com/devafterdark/project-jarvis/pkg/rest"
 )
 
 type mockRoundTripper struct {

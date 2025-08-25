@@ -4,8 +4,8 @@ import (
 	"context"
 	"log/slog"
 
-	channelconfig "github.com/genians/endpoint-lab-slack-bot/service/channelconfig/client"
-	jarvis "github.com/genians/endpoint-lab-slack-bot/service/jarvis/client"
+	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
+	jarvis "github.com/devafterdark/project-jarvis/service/jarvis/client"
 )
 
 func ListInvitedChannels() []string {

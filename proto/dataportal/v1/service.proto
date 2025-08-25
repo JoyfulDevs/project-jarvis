@@ -4,7 +4,7 @@ package dataportal.v1;
 
 import "dataportal/v1/types.proto";
 
-option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/dataportal";
+option go_package = "github.com/devafterdark/project-jarvis/proto/dataportal";
 
 service DataPortalService {
   rpc ListHolidays(ListHolidaysRequest) returns (ListHolidaysResponse) {}

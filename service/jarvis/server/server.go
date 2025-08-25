@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	jarvisv1 "github.com/genians/endpoint-lab-slack-bot/gen/go/jarvis/v1"
+	jarvisv1 "github.com/devafterdark/project-jarvis/gen/go/jarvis/v1"
 )
 
 type serverOptions struct {

@@ -7,11 +7,12 @@
 package dataportal
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -175,7 +176,7 @@ const file_dataportal_v1_types_proto_rawDesc = "" +
 	"\x04time\x18\x01 \x01(\tR\x04time\x12 \n" +
 	"\vtemperature\x18\x02 \x01(\x05R\vtemperature\x12$\n" +
 	"\rprecipitation\x18\x03 \x01(\tR\rprecipitation\x12\x10\n" +
-	"\x03sky\x18\x04 \x01(\tR\x03skyB<Z:github.com/genians/endpoint-lab-slack-bot/proto/dataportalb\x06proto3"
+	"\x03sky\x18\x04 \x01(\tR\x03skyB<Z:github.com/devafterdark/project-jarvis/proto/dataportalb\x06proto3"
 
 var (
 	file_dataportal_v1_types_proto_rawDescOnce sync.Once

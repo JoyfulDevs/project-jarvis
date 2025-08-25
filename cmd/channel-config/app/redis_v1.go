@@ -6,7 +6,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"github.com/genians/endpoint-lab-slack-bot/service/channelconfig/server"
+	"github.com/devafterdark/project-jarvis/service/channelconfig/server"
 )
 
 var _ server.ServiceV1 = (*RedisService)(nil)

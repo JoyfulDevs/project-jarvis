@@ -7,7 +7,7 @@ import (
 
 	"github.com/anthropics/anthropic-sdk-go"
 
-	"github.com/genians/endpoint-lab-slack-bot/service/aigateway/server"
+	"github.com/devafterdark/project-jarvis/service/aigateway/server"
 )
 
 var _ server.ServiceV1 = (*GatewayService)(nil)

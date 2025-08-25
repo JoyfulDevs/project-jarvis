@@ -6,7 +6,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/rest"
+	"github.com/devafterdark/project-jarvis/pkg/rest"
 )
 
 const domain = "https://slack.com/api"

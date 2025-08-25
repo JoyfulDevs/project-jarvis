@@ -7,11 +7,12 @@
 package channelconfig
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -173,7 +174,7 @@ const file_channelconfig_v2_types_proto_rawDesc = "" +
 	"\x10DailyScrumConfig\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\".\n" +
 	"\x12WeeklyReportConfig\x12\x18\n" +
-	"\aenabled\x18\x01 \x01(\bR\aenabledB?Z=github.com/genians/endpoint-lab-slack-bot/proto/channelconfigb\x06proto3"
+	"\aenabled\x18\x01 \x01(\bR\aenabledB?Z=github.com/devafterdark/project-jarvis/proto/channelconfigb\x06proto3"
 
 var (
 	file_channelconfig_v2_types_proto_rawDescOnce sync.Once

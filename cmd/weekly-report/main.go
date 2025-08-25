@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/genians/endpoint-lab-slack-bot/cmd/weekly-report/app"
+	"github.com/devafterdark/project-jarvis/cmd/weekly-report/app"
 )
 
 func main() {

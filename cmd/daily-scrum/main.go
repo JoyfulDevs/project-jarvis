@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/genians/endpoint-lab-slack-bot/cmd/daily-scrum/app"
+	"github.com/devafterdark/project-jarvis/cmd/daily-scrum/app"
 )
 
 func main() {

@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	jarvisv1 "github.com/genians/endpoint-lab-slack-bot/gen/go/jarvis/v1"
+	jarvisv1 "github.com/devafterdark/project-jarvis/gen/go/jarvis/v1"
 )
 
 type UserProfileV1 = jarvisv1.UserProfile

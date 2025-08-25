@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package aigateway.v1;
 
-option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/aigateway";
+option go_package = "github.com/devafterdark/project-jarvis/proto/aigateway";
 
 service AIGatewayService {
   rpc GenerateText(GenerateTextRequest) returns (GenerateTextResponse) {}

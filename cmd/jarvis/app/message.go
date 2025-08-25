@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/kst"
-	"github.com/genians/endpoint-lab-slack-bot/pkg/slack/blockkit"
-	aigateway "github.com/genians/endpoint-lab-slack-bot/service/aigateway/client"
-	channelconfig "github.com/genians/endpoint-lab-slack-bot/service/channelconfig/client"
-	dataportal "github.com/genians/endpoint-lab-slack-bot/service/dataportal/client"
+	"github.com/devafterdark/project-jarvis/pkg/kst"
+	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
+	aigateway "github.com/devafterdark/project-jarvis/service/aigateway/client"
+	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
+	dataportal "github.com/devafterdark/project-jarvis/service/dataportal/client"
 )
 
 func makeProgressMessage() []blockkit.SlackBlock {

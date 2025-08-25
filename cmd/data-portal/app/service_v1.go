@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/dataportal"
-	"github.com/genians/endpoint-lab-slack-bot/pkg/kst"
-	"github.com/genians/endpoint-lab-slack-bot/service/dataportal/server"
+	"github.com/devafterdark/project-jarvis/pkg/dataportal"
+	"github.com/devafterdark/project-jarvis/pkg/kst"
+	"github.com/devafterdark/project-jarvis/service/dataportal/server"
 )
 
 var _ server.ServiceV1 = (*DataPortalService)(nil)
