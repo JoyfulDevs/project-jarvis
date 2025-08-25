@@ -3,7 +3,7 @@ package app
 import (
 	"log/slog"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/kst"
+	"github.com/devafterdark/project-jarvis/pkg/kst"
 )
 
 func Run() {

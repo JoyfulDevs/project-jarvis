@@ -1,4 +1,4 @@
-module github.com/genians/endpoint-lab-slack-bot
+module github.com/devafterdark/project-jarvis
 
 go 1.25.0
 

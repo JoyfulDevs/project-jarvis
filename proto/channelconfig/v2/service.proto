@@ -4,7 +4,7 @@ package channelconfig.v2;
 
 import "channelconfig/v2/types.proto";
 
-option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/channelconfig";
+option go_package = "github.com/devafterdark/project-jarvis/proto/channelconfig";
 
 service ChannelConfigService {
   rpc GetChannelConfig(GetChannelConfigRequest) returns (GetChannelConfigResponse) {}

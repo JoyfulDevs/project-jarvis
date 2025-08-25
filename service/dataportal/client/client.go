@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	dataportalv1 "github.com/genians/endpoint-lab-slack-bot/gen/go/dataportal/v1"
+	dataportalv1 "github.com/devafterdark/project-jarvis/gen/go/dataportal/v1"
 )
 
 type clientOptions struct {

@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/genians/endpoint-lab-slack-bot/cmd/channel-config/app"
+	"github.com/devafterdark/project-jarvis/cmd/channel-config/app"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	jarvis "github.com/genians/endpoint-lab-slack-bot/service/jarvis/client"
+	jarvis "github.com/devafterdark/project-jarvis/service/jarvis/client"
 )
 
 func WeeklyReportMessage() string {

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dataportal.v1;
 
-option go_package = "github.com/genians/endpoint-lab-slack-bot/proto/dataportal";
+option go_package = "github.com/devafterdark/project-jarvis/proto/dataportal";
 
 message Holiday {
   int32 year = 1;

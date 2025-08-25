@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	channelconfig "github.com/genians/endpoint-lab-slack-bot/service/channelconfig/client"
+	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
 )
 
 func enableDailyScrumConfig(channel string, enabled bool) (*channelconfig.DailyScrumConfigV2, error) {

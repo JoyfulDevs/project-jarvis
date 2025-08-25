@@ -1,7 +1,7 @@
 package slack
 
 import (
-	"github.com/genians/endpoint-lab-slack-bot/pkg/slack/blockkit"
+	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
 )
 
 // reference

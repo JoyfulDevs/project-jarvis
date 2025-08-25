@@ -7,11 +7,12 @@
 package jarvis
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -435,7 +436,7 @@ const file_jarvis_v1_service_proto_rawDesc = "" +
 	"\rJarvisService\x12f\n" +
 	"\x13ListInvitedChannels\x12%.jarvis.v1.ListInvitedChannelsRequest\x1a&.jarvis.v1.ListInvitedChannelsResponse\"\x00\x12]\n" +
 	"\x10SendSlackMessage\x12\".jarvis.v1.SendSlackMessageRequest\x1a#.jarvis.v1.SendSlackMessageResponse\"\x00\x12W\n" +
-	"\x0eGetUserProfile\x12 .jarvis.v1.GetUserProfileRequest\x1a!.jarvis.v1.GetUserProfileResponse\"\x00B8Z6github.com/genians/endpoint-lab-slack-bot/proto/jarvisb\x06proto3"
+	"\x0eGetUserProfile\x12 .jarvis.v1.GetUserProfileRequest\x1a!.jarvis.v1.GetUserProfileResponse\"\x00B8Z6github.com/devafterdark/project-jarvis/proto/jarvisb\x06proto3"
 
 var (
 	file_jarvis_v1_service_proto_rawDescOnce sync.Once

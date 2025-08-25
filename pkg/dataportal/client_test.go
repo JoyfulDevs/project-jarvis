@@ -5,7 +5,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/dataportal"
+	"github.com/devafterdark/project-jarvis/pkg/dataportal"
 )
 
 func TestUltraShortTermForecastResponse(t *testing.T) {

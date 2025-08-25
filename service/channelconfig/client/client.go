@@ -6,8 +6,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	channelconfigv1 "github.com/genians/endpoint-lab-slack-bot/gen/go/channelconfig/v1"
-	channelconfigv2 "github.com/genians/endpoint-lab-slack-bot/gen/go/channelconfig/v2"
+	channelconfigv1 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v1"
+	channelconfigv2 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v2"
 )
 
 type clientOptions struct {

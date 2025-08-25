@@ -9,7 +9,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"github.com/genians/endpoint-lab-slack-bot/service/channelconfig/server"
+	"github.com/devafterdark/project-jarvis/service/channelconfig/server"
 )
 
 const (

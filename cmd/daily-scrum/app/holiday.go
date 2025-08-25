@@ -6,7 +6,7 @@ import (
 	"slices"
 	"time"
 
-	dataportal "github.com/genians/endpoint-lab-slack-bot/service/dataportal/client"
+	dataportal "github.com/devafterdark/project-jarvis/service/dataportal/client"
 )
 
 func IsHoliday(t time.Time) bool {

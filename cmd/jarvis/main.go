@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/genians/endpoint-lab-slack-bot/cmd/jarvis/app"
+	"github.com/devafterdark/project-jarvis/cmd/jarvis/app"
 )
 
 func main() {

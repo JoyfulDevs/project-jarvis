@@ -3,7 +3,7 @@ package main
 import (
 	"log/slog"
 
-	"github.com/genians/endpoint-lab-slack-bot/cmd/ai-gateway/app"
+	"github.com/devafterdark/project-jarvis/cmd/ai-gateway/app"
 )
 
 func main() {

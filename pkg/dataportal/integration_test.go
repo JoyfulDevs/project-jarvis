@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/genians/endpoint-lab-slack-bot/pkg/dataportal"
+	"github.com/devafterdark/project-jarvis/pkg/dataportal"
 )
 
 func TestListHolidays(t *testing.T) {
