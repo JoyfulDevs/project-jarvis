@@ -7,12 +7,11 @@
 package channelconfig
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -559,7 +558,7 @@ const file_channelconfig_v1_service_proto_rawDesc = "" +
 	"\vUnsubscribe\x12$.channelconfig.v1.UnsubscribeRequest\x1a%.channelconfig.v1.UnsubscribeResponse\"\x00\x12e\n" +
 	"\x0eUnsubscribeAll\x12'.channelconfig.v1.UnsubscribeAllRequest\x1a(.channelconfig.v1.UnsubscribeAllResponse\"\x00\x12n\n" +
 	"\x11ListSubscriptions\x12*.channelconfig.v1.ListSubscriptionsRequest\x1a+.channelconfig.v1.ListSubscriptionsResponse\"\x00\x12z\n" +
-	"\x15ListChannelsByFeature\x12..channelconfig.v1.ListChannelsByFeatureRequest\x1a/.channelconfig.v1.ListChannelsByFeatureResponse\"\x00B?Z=github.com/devafterdark/project-jarvis/proto/channelconfigb\x06proto3"
+	"\x15ListChannelsByFeature\x12..channelconfig.v1.ListChannelsByFeatureRequest\x1a/.channelconfig.v1.ListChannelsByFeatureResponse\"\x00B<Z:github.com/devafterdark/project-jarvis/proto/channelconfigb\x06proto3"
 
 var (
 	file_channelconfig_v1_service_proto_rawDescOnce sync.Once

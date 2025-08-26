@@ -7,12 +7,11 @@
 package channelconfig
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -705,7 +704,7 @@ const file_channelconfig_v2_service_proto_rawDesc = "" +
 	"\x15SetWeeklyReportConfig\x12..channelconfig.v2.SetWeeklyReportConfigRequest\x1a/.channelconfig.v2.SetWeeklyReportConfigResponse\"\x00\x12z\n" +
 	"\x15GetWeeklyReportConfig\x12..channelconfig.v2.GetWeeklyReportConfigRequest\x1a/.channelconfig.v2.GetWeeklyReportConfigResponse\"\x00\x12}\n" +
 	"\x16AddScrumMessageHistory\x12/.channelconfig.v2.AddScrumMessageHistoryRequest\x1a0.channelconfig.v2.AddScrumMessageHistoryResponse\"\x00\x12}\n" +
-	"\x16GetScrumMessageHistory\x12/.channelconfig.v2.GetScrumMessageHistoryRequest\x1a0.channelconfig.v2.GetScrumMessageHistoryResponse\"\x00B?Z=github.com/devafterdark/project-jarvis/proto/channelconfigb\x06proto3"
+	"\x16GetScrumMessageHistory\x12/.channelconfig.v2.GetScrumMessageHistoryRequest\x1a0.channelconfig.v2.GetScrumMessageHistoryResponse\"\x00B<Z:github.com/devafterdark/project-jarvis/proto/channelconfigb\x06proto3"
 
 var (
 	file_channelconfig_v2_service_proto_rawDescOnce sync.Once
