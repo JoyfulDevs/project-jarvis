@@ -1,4 +1,4 @@
-FROM golang:1.25 AS builder
+FROM golang:1.25-alpine AS builder
 WORKDIR /app
 
 COPY . .
@@ -7,9 +7,8 @@ ENV GOARCH=amd64
 ENV CGO_ENABLED=0
 RUN go build -ldflags="-s -w" -o weekly-report ./cmd/weekly-report
 
-FROM scratch
+FROM gcr.io/distroless/static-debian12:nonroot
 
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/weekly-report /app/
 
 ENTRYPOINT ["/app/weekly-report"]
