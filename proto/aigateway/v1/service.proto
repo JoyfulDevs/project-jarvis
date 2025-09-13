@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package aigateway.v1;
 
-option go_package = "github.com/devafterdark/project-jarvis/proto/aigateway";
+option go_package = "github.com/joyfuldevs/project-jarvis/proto/aigateway";
 
 service AIGatewayService {
   rpc GenerateText(GenerateTextRequest) returns (GenerateTextResponse) {}

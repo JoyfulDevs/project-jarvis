@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	channelconfigv1 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v1"
+	channelconfigv1 "github.com/joyfuldevs/project-jarvis/gen/go/channelconfig/v1"
 )
 
 type FeatureV1 = channelconfigv1.Feature

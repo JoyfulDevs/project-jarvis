@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	jarvisv1 "github.com/devafterdark/project-jarvis/gen/go/jarvis/v1"
+	jarvisv1 "github.com/joyfuldevs/project-jarvis/gen/go/jarvis/v1"
 )
 
 // 슬랙봇이 초대된 채널 목록을 가져온다.

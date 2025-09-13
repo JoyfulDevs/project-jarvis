@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/devafterdark/project-jarvis/pkg/rest"
+	"github.com/joyfuldevs/project-jarvis/pkg/rest"
 )
 
 const domain = "https://apis.data.go.kr"

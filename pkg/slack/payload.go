@@ -1,7 +1,7 @@
 package slack
 
 import (
-	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
 )
 
 // reference

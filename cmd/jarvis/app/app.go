@@ -8,7 +8,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/devafterdark/project-jarvis/service/jarvis/server"
+	"github.com/joyfuldevs/project-jarvis/service/jarvis/server"
 )
 
 func Run() {

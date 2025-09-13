@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package jarvis.v1;
 
-option go_package = "github.com/devafterdark/project-jarvis/proto/jarvis";
+option go_package = "github.com/joyfuldevs/project-jarvis/proto/jarvis";
 
 service JarvisService {
   rpc ListInvitedChannels(ListInvitedChannelsRequest) returns (ListInvitedChannelsResponse) {}

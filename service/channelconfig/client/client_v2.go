@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	channelconfigv2 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v2"
+	channelconfigv2 "github.com/joyfuldevs/project-jarvis/gen/go/channelconfig/v2"
 )
 
 type ChannelConfigV2 = channelconfigv2.ChannelConfig

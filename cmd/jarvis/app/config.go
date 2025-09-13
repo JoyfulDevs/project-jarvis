@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
+	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
 )
 
 func enableDailyScrumConfig(channel string, enabled bool) (*channelconfig.DailyScrumConfigV2, error) {

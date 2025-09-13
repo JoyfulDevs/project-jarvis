@@ -1,4 +1,4 @@
-module github.com/devafterdark/project-jarvis
+module github.com/joyfuldevs/project-jarvis
 
 go 1.25.0
 

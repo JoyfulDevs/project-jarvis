@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	aigatewayv1 "github.com/devafterdark/project-jarvis/gen/go/aigateway/v1"
+	aigatewayv1 "github.com/joyfuldevs/project-jarvis/gen/go/aigateway/v1"
 )
 
 type serverOptions struct {

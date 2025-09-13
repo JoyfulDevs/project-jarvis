@@ -1,6 +1,6 @@
 package app
 
-import "github.com/devafterdark/project-jarvis/pkg/dataportal"
+import "github.com/joyfuldevs/project-jarvis/pkg/dataportal"
 
 type DataPortalService struct {
 	client *dataportal.Client

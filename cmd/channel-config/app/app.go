@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/devafterdark/project-jarvis/service/channelconfig/server"
+	"github.com/joyfuldevs/project-jarvis/service/channelconfig/server"
 )
 
 func Run() {

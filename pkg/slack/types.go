@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
 )
 
 type APIResponse struct {

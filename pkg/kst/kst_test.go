@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/devafterdark/project-jarvis/pkg/kst"
+	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 )
 
 func TestKoreaTime(t *testing.T) {
