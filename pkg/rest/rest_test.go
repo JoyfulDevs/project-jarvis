@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/devafterdark/project-jarvis/pkg/rest"
+	"github.com/joyfuldevs/project-jarvis/pkg/rest"
 )
 
 type mockRoundTripper struct {

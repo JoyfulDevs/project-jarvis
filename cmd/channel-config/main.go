@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/devafterdark/project-jarvis/cmd/channel-config/app"
+	"github.com/joyfuldevs/project-jarvis/cmd/channel-config/app"
 )
 
 func main() {

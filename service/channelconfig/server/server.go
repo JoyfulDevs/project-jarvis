@@ -8,8 +8,8 @@ import (
 
 	"google.golang.org/grpc"
 
-	channelconfigv1 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v1"
-	channelconfigv2 "github.com/devafterdark/project-jarvis/gen/go/channelconfig/v2"
+	channelconfigv1 "github.com/joyfuldevs/project-jarvis/gen/go/channelconfig/v1"
+	channelconfigv2 "github.com/joyfuldevs/project-jarvis/gen/go/channelconfig/v2"
 )
 
 type serverOptions struct {

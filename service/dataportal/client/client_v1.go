@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	dataportalv1 "github.com/devafterdark/project-jarvis/gen/go/dataportal/v1"
+	dataportalv1 "github.com/joyfuldevs/project-jarvis/gen/go/dataportal/v1"
 )
 
 type HolidayV1 = dataportalv1.Holiday

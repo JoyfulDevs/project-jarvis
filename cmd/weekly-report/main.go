@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/devafterdark/project-jarvis/cmd/weekly-report/app"
+	"github.com/joyfuldevs/project-jarvis/cmd/weekly-report/app"
 )
 
 func main() {

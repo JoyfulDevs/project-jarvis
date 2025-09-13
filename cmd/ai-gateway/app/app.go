@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/devafterdark/project-jarvis/service/aigateway/server"
+	"github.com/joyfuldevs/project-jarvis/service/aigateway/server"
 )
 
 func Run() {

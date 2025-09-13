@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package channelconfig.v1;
 
-option go_package = "github.com/devafterdark/project-jarvis/proto/channelconfig";
+option go_package = "github.com/joyfuldevs/project-jarvis/proto/channelconfig";
 
 service ChannelConfigService {
   rpc Subscribe(SubscribeRequest) returns (SubscribeResponse) {}

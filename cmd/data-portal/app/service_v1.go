@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/devafterdark/project-jarvis/pkg/dataportal"
-	"github.com/devafterdark/project-jarvis/pkg/kst"
-	"github.com/devafterdark/project-jarvis/service/dataportal/server"
+	"github.com/joyfuldevs/project-jarvis/pkg/dataportal"
+	"github.com/joyfuldevs/project-jarvis/pkg/kst"
+	"github.com/joyfuldevs/project-jarvis/service/dataportal/server"
 )
 
 var _ server.ServiceV1 = (*DataPortalService)(nil)

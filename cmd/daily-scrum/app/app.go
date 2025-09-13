@@ -3,7 +3,7 @@ package app
 import (
 	"log/slog"
 
-	"github.com/devafterdark/project-jarvis/pkg/kst"
+	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 )
 
 func Run() {

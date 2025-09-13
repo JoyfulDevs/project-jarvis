@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	jarvis "github.com/devafterdark/project-jarvis/service/jarvis/client"
+	jarvis "github.com/joyfuldevs/project-jarvis/service/jarvis/client"
 )
 
 func WeeklyReportMessage() string {

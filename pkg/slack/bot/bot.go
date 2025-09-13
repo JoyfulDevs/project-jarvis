@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/devafterdark/project-jarvis/pkg/slack"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack"
 )
 
 type EventHandler interface {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"log/slog"
 
-	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
-	jarvis "github.com/devafterdark/project-jarvis/service/jarvis/client"
+	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
+	jarvis "github.com/joyfuldevs/project-jarvis/service/jarvis/client"
 )
 
 func ListInvitedChannels() []string {

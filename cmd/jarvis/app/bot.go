@@ -3,8 +3,8 @@ package app
 import (
 	"context"
 
-	"github.com/devafterdark/project-jarvis/pkg/slack"
-	"github.com/devafterdark/project-jarvis/pkg/slack/bot"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack/bot"
 )
 
 var _ bot.EventHandler = (*JarvisBot)(nil)

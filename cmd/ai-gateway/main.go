@@ -3,7 +3,7 @@ package main
 import (
 	"log/slog"
 
-	"github.com/devafterdark/project-jarvis/cmd/ai-gateway/app"
+	"github.com/joyfuldevs/project-jarvis/cmd/ai-gateway/app"
 )
 
 func main() {

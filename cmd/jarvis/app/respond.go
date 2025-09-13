@@ -12,10 +12,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/devafterdark/project-jarvis/pkg/kst"
-	"github.com/devafterdark/project-jarvis/pkg/slack"
-	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
-	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
+	"github.com/joyfuldevs/project-jarvis/pkg/kst"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
+	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
 )
 
 type CommandResponder struct {

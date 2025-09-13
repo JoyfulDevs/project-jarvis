@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/devafterdark/project-jarvis/pkg/kst"
-	channelconfig "github.com/devafterdark/project-jarvis/service/channelconfig/client"
-	jarvis "github.com/devafterdark/project-jarvis/service/jarvis/client"
+	"github.com/joyfuldevs/project-jarvis/pkg/kst"
+	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
+	jarvis "github.com/joyfuldevs/project-jarvis/service/jarvis/client"
 )
 
 func DailyScrumMessage(t time.Time) string {

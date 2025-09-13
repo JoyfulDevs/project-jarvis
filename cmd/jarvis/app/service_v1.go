@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/devafterdark/project-jarvis/pkg/slack"
-	"github.com/devafterdark/project-jarvis/pkg/slack/blockkit"
-	"github.com/devafterdark/project-jarvis/service/jarvis/server"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack"
+	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
+	"github.com/joyfuldevs/project-jarvis/service/jarvis/server"
 )
 
 var _ server.ServiceV1 = (*JarvisService)(nil)
