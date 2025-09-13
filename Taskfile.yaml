@@ -16,8 +16,6 @@ vars:
 tasks:
   proto:
     desc: "Generate proto code (clean + gen)"
-    vars:
-      PROTO_FILES: task proto-files
     cmds:
       - task: proto-clean
       - task: proto-gen
@@ -43,7 +41,9 @@ tasks:
           split: "\n"
         cmd: |
           echo "Generating code for {{.ITEM}}"
-          protoc {{.PROTO_OPT_PROTO_PATH}} {{.PROTO_OPT_GO_OUT}} {{.PROTO_OPT_GO_PATH}} {{.PROTO_OPT_GO_GRPC_OUT}} {{.PROTO_OPT_GO_GRPC_PATH}} {{.ITEM}}
+          protoc {{.PROTO_OPT_PROTO_PATH}} {{.PROTO_OPT_GO_OUT}} {{.PROTO_OPT_GO_PATH}} \
+            {{.PROTO_OPT_GO_GRPC_OUT}} {{.PROTO_OPT_GO_GRPC_PATH}} \
+            {{.ITEM}}
 
   proto-clean:
     desc: "Clean generated proto code"
