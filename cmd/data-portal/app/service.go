@@ -1,13 +1,14 @@
 package app
 
-import "github.com/joyfuldevs/project-jarvis/pkg/dataportal"
+import (
+	"github.com/jh1104/publicapi"
+	"github.com/jh1104/publicapi/specialday"
+)
 
 type DataPortalService struct {
-	client *dataportal.Client
 }
 
 func NewDataPortalService(authKey string) *DataPortalService {
-	return &DataPortalService{
-		client: dataportal.NewClient(authKey),
-	}
+	specialday.SetDefaultClient(publicapi.NewClient(authKey))
+	return &DataPortalService{}
 }
