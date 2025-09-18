@@ -2,14 +2,14 @@ package app
 
 import (
 	"context"
-	"errors"
 	"log/slog"
 	"slices"
 	"strconv"
 	"sync"
 	"time"
 
-	"github.com/joyfuldevs/project-jarvis/pkg/dataportal"
+	"github.com/jh1104/publicapi/forecast"
+	"github.com/jh1104/publicapi/specialday"
 	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 	"github.com/joyfuldevs/project-jarvis/service/dataportal/server"
 )
@@ -17,22 +17,14 @@ import (
 var _ server.ServiceV1 = (*DataPortalService)(nil)
 
 func (s *DataPortalService) ListHolidays(ctx context.Context, year int, month int) ([]*server.HolidayV1, error) {
-	req := &dataportal.ListHolidaysRequest{
-		Year:  year,
-		Month: month,
-	}
-	resp, err := s.client.ListHolidays(ctx, req)
+	resp, err := specialday.ListHolidays(ctx, specialday.NewParameters(year, month))
 	if err != nil {
 		return nil, err
-	}
-	if resp.Body == nil {
-		slog.Warn("received empty response body for holidays")
-		return nil, errors.New("empty response body")
 	}
 
 	result := make([]*server.HolidayV1, 0, len(resp.Body.Data.Items))
 	for _, item := range resp.Body.Data.Items {
-		t, err := time.Parse("20060102", item.Date)
+		t, err := time.Parse("20060102", strconv.Itoa(item.Date))
 		if err != nil {
 			slog.Warn("failed to parse holiday date", "date", item.Date, "error", err)
 			continue
@@ -54,106 +46,76 @@ func (s *DataPortalService) GetUltraShortTermForecast(
 	ny int32,
 ) ([]*server.ForecastV1, error) {
 	now := kst.Now()
-	baseDate := now.Format("20060102")
-	// 초단기 예보는 매 시간 30분 단위로 제공된다.
-	baseTime := func() string {
-		if now.Minute() > 30 {
-			return now.Format("15")
-		} else {
-			return now.Add(-time.Hour).Format("15")
-		}
-	}() + "30"
 
-	var (
-		page  = 1
-		count = 10
-	)
-
-	newRequest := func(page int) *dataportal.UltraShortTermForecastRequest {
-		return &dataportal.UltraShortTermForecastRequest{
-			Page:     page,
-			Count:    count,
-			BaseDate: baseDate,
-			BaseTime: baseTime,
-			NX:       int(nx),
-			NY:       int(ny),
-		}
+	baseDate, baseTime := forecast.BaseForUltraShortTermForecast(now)
+	params := forecast.Parameters{
+		BaseDate:     baseDate,
+		BaseTime:     baseTime,
+		NX:           int(nx),
+		NY:           int(ny),
+		NumberOfRows: 10,
+		PageNo:       1,
 	}
 
-	req := newRequest(page)
-	resp, err := s.client.GetUltraShortTermForecast(ctx, req)
+	resp, err := forecast.GetUltraShortTermForecast(ctx, params)
 	if err != nil {
 		return nil, err
-	}
-
-	if resp.Body == nil {
-		slog.Warn("received empty response body for forecast")
-		return nil, errors.New("empty response body")
 	}
 
 	// 초단기 예보는 6시간 까지만 제공된다.
 	var (
 		result      = make([]*server.ForecastV1, 0, 6)
 		forecastMap = make(map[string]*server.ForecastV1, 6)
-		itemCh      = make(chan dataportal.UltraShortTermForecastItem)
+		itemCh      = make(chan forecast.Item)
 	)
 
 	wg := sync.WaitGroup{}
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		for _, item := range resp.Body.Data.Items {
 			itemCh <- item
 		}
-	}()
+	})
 
-	for page*count < resp.Body.Total {
-		page += 1
+	remains := (resp.Body.Total-params.NumberOfRows)/params.NumberOfRows + 1
+	for range remains {
 		wg.Add(1)
-		go func(page int) {
+		go func(params forecast.Parameters) {
 			defer wg.Done()
-			req := newRequest(page)
-			resp, err := s.client.GetUltraShortTermForecast(ctx, req)
+			resp, err := forecast.GetUltraShortTermForecast(ctx, params)
 			if err != nil {
 				slog.Warn("failed to get ultra short term forecast", slog.Any("error", err))
-				return
-			}
-			if resp.Body == nil {
-				slog.Warn("received empty response body for forecast",
-					slog.Int("page", req.Page),
-					slog.Int("count", req.Count),
-				)
 				return
 			}
 			for _, item := range resp.Body.Data.Items {
 				itemCh <- item
 			}
-		}(page)
+		}(params.NextPage())
 	}
+
 	go func() {
 		wg.Wait()
 		close(itemCh)
 	}()
 
 	for item := range itemCh {
-		key := item.ForecastDate + item.ForecastTime
+		key := item.Date + item.Time
 		if _, ok := forecastMap[key]; !ok {
 			forecastMap[key] = &server.ForecastV1{
-				Time: item.ForecastDate + item.ForecastTime,
+				Time: item.Date + item.Time,
 			}
 		}
 		switch item.Category {
-		case dataportal.CategoryTemperature:
-			t, err := strconv.Atoi(item.ForecastValue)
+		case forecast.CategoryTemperature:
+			t, err := strconv.Atoi(item.Value)
 			if err != nil {
-				slog.Warn("failed to parse temperature", "value", item.ForecastValue, "error", err)
+				slog.Warn("failed to parse temperature", "value", item.Value, "error", err)
 				continue
 			}
 			forecastMap[key].Temperature = int32(t)
-		case dataportal.CategoryPrecipitation:
-			forecastMap[key].Precipitation = dataportal.PrecipitationCode(item.ForecastValue).String()
-		case dataportal.CategorySky:
-			forecastMap[key].Sky = dataportal.SkyCode(item.ForecastValue).String()
+		case forecast.CategoryPrecipitation:
+			forecastMap[key].Precipitation = forecast.PrecipitationCode(item.Value).String()
+		case forecast.CategorySky:
+			forecastMap[key].Sky = forecast.SkyCode(item.Value).String()
 		}
 	}
 

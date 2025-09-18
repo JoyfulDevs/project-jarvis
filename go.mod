@@ -5,6 +5,7 @@ go 1.25.0
 require (
 	github.com/anthropics/anthropic-sdk-go v1.9.1
 	github.com/gorilla/websocket v1.5.3
+	github.com/jh1104/publicapi v1.0.1
 	github.com/redis/go-redis/v9 v9.12.1
 	google.golang.org/grpc v1.75.0
 	google.golang.org/protobuf v1.36.8
