@@ -34,10 +34,8 @@ func Run() {
 	}()
 
 	wg := sync.WaitGroup{}
-	wg.Add(2)
 
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		slog.Info("starting jarvis service")
 		jarvisService := NewJarvisService(appToken, botToken)
 		jarvisServer := server.NewServer(
@@ -47,17 +45,16 @@ func Run() {
 			slog.Error("failed to run service", slog.Any("error", err))
 		}
 		cancel()
-	}()
+	})
 
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		slog.Info("starting jarvis bot")
 		jarvisBot := NewJarvisBot(appToken, botToken)
 		if err := jarvisBot.Run(ctx); err != nil {
 			slog.Error("failed to run bot", slog.Any("error", err))
 		}
 		cancel()
-	}()
+	})
 
 	wg.Wait()
 }

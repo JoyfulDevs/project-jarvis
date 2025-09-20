@@ -345,9 +345,7 @@ func listScrumMessages(appToken, botToken, channel, user string) map[float64]str
 
 	wg := sync.WaitGroup{}
 	for _, id := range messageIDs {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			req := &slack.ListRepliesRequest{
 				Channel:   channel,
 				Timestamp: id,
@@ -368,7 +366,7 @@ func listScrumMessages(appToken, botToken, channel, user string) map[float64]str
 				}
 				return
 			}
-		}()
+		})
 	}
 	go func() {
 		wg.Wait()
