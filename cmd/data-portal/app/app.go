@@ -17,14 +17,8 @@ func Run() {
 		return
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-	go func() {
-		<-sigs
-		cancel()
-	}()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 
 	server := server.NewServer(
 		server.WithServiceV1(NewDataPortalService(key)),

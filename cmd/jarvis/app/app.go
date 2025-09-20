@@ -23,15 +23,8 @@ func Run() {
 		return
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-
-	go func() {
-		<-sigs
-		cancel()
-	}()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 
 	wg := sync.WaitGroup{}
 
@@ -44,7 +37,7 @@ func Run() {
 		if err := jarvisServer.Serve(ctx); err != nil {
 			slog.Error("failed to run service", slog.Any("error", err))
 		}
-		cancel()
+		stop()
 	})
 
 	wg.Go(func() {
@@ -53,7 +46,7 @@ func Run() {
 		if err := jarvisBot.Run(ctx); err != nil {
 			slog.Error("failed to run bot", slog.Any("error", err))
 		}
-		cancel()
+		stop()
 	})
 
 	wg.Wait()
