@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 	"github.com/joyfuldevs/project-jarvis/pkg/slack"
@@ -314,7 +315,7 @@ func listScrumMessages(appToken, botToken, channel, user string) map[float64]str
 			return nil
 		}
 		// 월요일 이후의 메시지 ID만 반환한다.
-		min := float64(kst.LastMonday(kst.Now()).Unix())
+		min := float64(kst.LastWeekday(time.Now(), time.Monday).Unix())
 		result := make([]float64, 0, len(ids))
 		for _, id := range ids {
 			if id >= min {

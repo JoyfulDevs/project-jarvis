@@ -2,21 +2,16 @@ package kst
 
 import "time"
 
-var kst = time.FixedZone("KST", 60*60*9)
+// Offset is the fixed number of seconds east of UTC for Korea Standard Time (UTC+09:00).
+const Offset = 9 * 60 * 60
 
-// 현재 한국 시간을 리턴한다.
-func Now() time.Time {
-	return time.Now().In(kst)
-}
+// Zone is the fixed *time.Location for Korea Standard Time (UTC+09:00).
+var Zone = time.FixedZone("KST", Offset)
 
-// 전달 받은 시간을 한국 시간으로 변환한다.
-func KST(t time.Time) time.Time {
-	return t.In(kst)
-}
+type weekday time.Weekday
 
-// 날짜에 따라 월,화,수,목,금,토,일 요일을 리턴한다.
-func Weekday(t time.Time) string {
-	switch t.Weekday() {
+func (w weekday) String() string {
+	switch time.Weekday(w) {
 	case time.Sunday:
 		return "일"
 	case time.Monday:
@@ -36,13 +31,39 @@ func Weekday(t time.Time) string {
 	}
 }
 
-// 전달받은 날짜를 기준으로 마지막 월요일의 날짜를 리턴한다.
-func LastMonday(t time.Time) time.Time {
+// 한국 표준시(KST)로 설정된 현재 시간을 반환한다.
+func Now() time.Time {
+	return time.Now().In(Zone)
+}
+
+// 주어진 시간을 한국 표준시(KST)로 변환한다.
+func KST(t time.Time) time.Time {
+	return t.In(Zone)
+}
+
+// 주어진 시간의 한국어 요일을 반환한다.
+func Weekday(t time.Time) string {
+	return weekday(t.Weekday()).String()
+}
+
+// 주어진 날짜를 기준으로 가장 최근의 특정 요일의 시간을 반환한다.
+func LastWeekday(t time.Time, weekday time.Weekday) time.Time {
 	t = KST(t)
-	weekday := t.Weekday()
-	offset := int(time.Monday - weekday)
+	year, month, day := t.Date()
+	offset := int(weekday - t.Weekday())
 	if offset > 0 {
 		offset -= 7
 	}
-	return time.Date(t.Year(), t.Month(), t.Day()+offset, 0, 0, 0, 0, t.Location())
+	return time.Date(year, month, day+offset, 0, 0, 0, 0, t.Location())
+}
+
+// 주어진 날짜를 기준으로 가장 가까운 특정 요일의 시간을 반환한다.
+func NextWeekday(t time.Time, weekday time.Weekday) time.Time {
+	t = KST(t)
+	year, month, day := t.Date()
+	offset := int(weekday - t.Weekday())
+	if offset <= 0 {
+		offset += 7
+	}
+	return time.Date(year, month, day+offset, 0, 0, 0, 0, t.Location())
 }
