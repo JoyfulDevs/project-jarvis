@@ -59,17 +59,14 @@ func (b *Bot) Run(ctx context.Context) error {
 		}()
 
 		wg := &sync.WaitGroup{}
-		wg.Add(2)
-		go func() {
+		wg.Go(func() {
 			b.runReadLoop(connCtx, conn)
 			connCancel()
-			wg.Done()
-		}()
-		go func() {
+		})
+		wg.Go(func() {
 			b.runEventLoop(connCtx, conn)
 			connCancel()
-			wg.Done()
-		}()
+		})
 		wg.Wait()
 	}
 }

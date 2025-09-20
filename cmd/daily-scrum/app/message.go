@@ -43,9 +43,7 @@ func SendScrumMessage(channels []string, message string) {
 
 	wg := sync.WaitGroup{}
 	for _, channel := range channels {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			ts, err := jarvisClient.SendMessage(context.Background(), channel, message, nil, false)
 			if err != nil {
 				slog.Error("failed to send message", slog.Any("error", err))
@@ -57,7 +55,7 @@ func SendScrumMessage(channels []string, message string) {
 			}
 
 			slog.Info("send scrum message", slog.String("channel", channel), slog.Float64("timestamp", ts))
-		}()
+		})
 	}
 	wg.Wait()
 }
