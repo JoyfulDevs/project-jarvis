@@ -2,9 +2,10 @@ package kst
 
 import "time"
 
-// KST is UTC +09:00
+// Offset is the fixed number of seconds east of UTC for Korea Standard Time (UTC+09:00).
 const Offset = 9 * 60 * 60
 
+// Zone is the fixed *time.Location for Korea Standard Time (UTC+09:00).
 var Zone = time.FixedZone("KST", Offset)
 
 type weekday time.Weekday

@@ -7,6 +7,16 @@ import (
 	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 )
 
+var weekdays = []time.Weekday{
+	time.Sunday,
+	time.Monday,
+	time.Tuesday,
+	time.Wednesday,
+	time.Thursday,
+	time.Friday,
+	time.Saturday,
+}
+
 func TestKoreaTime(t *testing.T) {
 	testCases := []struct {
 		desc  string
@@ -28,7 +38,7 @@ func TestKoreaTime(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.desc, func(t *testing.T) {
 			k := kst.KST(tc.input)
-			if _, offset := kst.KST(tc.input).Zone(); offset != 9*60*60 {
+			if _, offset := k.Zone(); offset != 9*60*60 {
 				t.Fatalf("expected KST offset to be 9 hours, got %d seconds", offset)
 			}
 			if k.UTC() != tc.input.UTC() {
@@ -152,15 +162,7 @@ func TestLastWeekday(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.desc, func(t *testing.T) {
-			for _, wd := range []time.Weekday{
-				time.Monday,
-				time.Tuesday,
-				time.Wednesday,
-				time.Thursday,
-				time.Friday,
-				time.Saturday,
-				time.Sunday,
-			} {
+			for _, wd := range weekdays {
 				result := kst.LastWeekday(tc.input, wd)
 				if weekday := result.Weekday(); weekday != wd {
 					t.Fatalf("expected last weekday to be %s, got %s", wd, weekday)
@@ -224,15 +226,6 @@ func TestNextWeekday(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.desc, func(t *testing.T) {
-			weekdays := []time.Weekday{
-				time.Monday,
-				time.Tuesday,
-				time.Wednesday,
-				time.Thursday,
-				time.Friday,
-				time.Saturday,
-				time.Sunday,
-			}
 			for _, wd := range weekdays {
 				result := kst.NextWeekday(tc.input, wd)
 				if weekday := result.Weekday(); weekday != wd {
