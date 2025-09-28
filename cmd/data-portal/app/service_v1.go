@@ -79,6 +79,7 @@ func (s *DataPortalService) GetUltraShortTermForecast(
 	remains := (resp.Body.Total-params.NumberOfRows)/params.NumberOfRows + 1
 	for range remains {
 		wg.Add(1)
+		params = params.NextPage()
 		go func(params forecast.Parameters) {
 			defer wg.Done()
 			resp, err := forecast.GetUltraShortTermForecast(ctx, params)
@@ -89,7 +90,7 @@ func (s *DataPortalService) GetUltraShortTermForecast(
 			for _, item := range resp.Body.Data.Items {
 				itemCh <- item
 			}
-		}(params.NextPage())
+		}(params)
 	}
 
 	go func() {
