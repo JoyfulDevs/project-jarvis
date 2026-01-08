@@ -7,8 +7,6 @@ on:
 
 jobs:
   build:
-    outputs:
-      version: ${{ steps.export.outputs.version }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -63,58 +61,6 @@ jobs:
         cache-to: type=gha,mode=max
         push: true
 
-    - name: Export version
-      id: export
-      run: echo "version=${{ steps.meta.outputs.version }}" >> "$GITHUB_OUTPUT"
-
-  deploy:
-    environment: ${{ startsWith(github.ref, 'refs/tags/v') && 'Release' || 'Beta' }}
-    runs-on: ubuntu-latest
-    needs: [build]
-
-    steps:
-    # https://github.com/actions/checkout
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Certificate
-      run: |
-        echo "${{ secrets.K8S_CLIENT_CERTIFICATE_BASE64 }}" | base64 -d > client.crt
-        echo "${{ secrets.K8S_CLIENT_KEY_BASE64 }}" | base64 -d > client.key
-
-    - name: Set up kubectl
-      run: |
-        kubectl config set-cluster bot-cluster --server=${{ vars.K8S_ADDRESS }} --insecure-skip-tls-verify=true
-        kubectl config set-credentials bot-user --client-certificate=./client.crt --client-key=./client.key
-        kubectl config set-context bot-ctx --cluster=bot-cluster --user=bot-user
-        kubectl config use-context bot-ctx
-
-    - name: Set up annotation
-      id: annotation
-      run: |
-        echo 'condition=select(.kind == "Deployment" or .kind == "StatefulSet" or .kind == "DaemonSet")' >> "$GITHUB_OUTPUT"
-        echo 'key=.metadata.annotations."kubernetes.io/change-cause"' >> "$GITHUB_OUTPUT"
-        echo "release_message=Release ${{ needs.build.outputs.version }}" >> "$GITHUB_OUTPUT"
-        echo "beta_message=$(echo "${{ github.event.head_commit.message }}" | head -n 1)" >> "$GITHUB_OUTPUT"
-
-    - name: Update image tags
-      run: |
-        ls k8s | xargs -I {} sed -i -E 's/(image: [^:]+):latest/\1:${{ needs.build.outputs.version }}/g' k8s/{}
-
-    - name: Update annotations for release
-      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      run: |
-        ls k8s | xargs -I {} yq -i 'with(${{ steps.annotation.outputs.condition }}; ${{ steps.annotation.outputs.key }} = "${{ steps.annotation.outputs.release_message }}")' k8s/{}
-
-    - name: Update annotations for beta
-      if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-      run: |
-        ls k8s | xargs -I {} yq -i 'with(${{ steps.annotation.outputs.condition }}; ${{ steps.annotation.outputs.key }} = "${{ steps.annotation.outputs.beta_message }}")' k8s/{}
-
-    - name: Deploy to cluster
-      run: |
-        ls k8s | xargs -I {} kubectl apply -f k8s/{} -n ${{ vars.K8S_NAMESPACE }}
-
   release:
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: [build]
@@ -126,3 +72,4 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         generate_release_notes: true
+
