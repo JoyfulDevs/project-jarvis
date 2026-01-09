@@ -11,7 +11,6 @@ import (
 	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
 	aigateway "github.com/joyfuldevs/project-jarvis/service/aigateway/client"
-	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
 	dataportal "github.com/joyfuldevs/project-jarvis/service/dataportal/client"
 )
 
@@ -25,47 +24,6 @@ func makeProgressMessage() []blockkit.SlackBlock {
 			},
 		},
 	}
-}
-
-func makeConfigMessage(channel string) []blockkit.SlackBlock {
-	client, err := channelconfig.NewClient()
-	if err != nil {
-		return makeErrorMessage(err)
-	}
-	defer func() {
-		if err := client.Close(); err != nil {
-			slog.Error("failed to close client", slog.Any("error", err))
-		}
-	}()
-
-	config, err := client.GetChannelConfig(context.Background(), channel)
-	if err != nil {
-		return makeErrorMessage(err)
-	}
-
-	blocks := make([]blockkit.SlackBlock, 0, 8)
-	blocks = append(blocks,
-		&blockkit.HeaderBlock{
-			Text: blockkit.TextObject{
-				Type:  blockkit.TextTypePlainText,
-				Text:  "⭐️ Jarvis 설정",
-				Emoji: true,
-			},
-		},
-		&blockkit.DividerBlock{},
-		makeConfigOnOffSection(
-			"스크럼 알림 설정",
-			ConfigActionDailyScrumEnable,
-			config.DailyScrum.Enabled,
-		),
-		makeConfigOnOffSection(
-			"주간보고 알림 설정",
-			ConfigActionWeeklyReportEnable,
-			config.WeeklyReport.Enabled,
-		),
-		makeDoneButton(),
-	)
-	return blocks
 }
 
 func makeConfigOnOffSection(title string, actionID string, on bool) *blockkit.SectionBlock {
@@ -192,48 +150,6 @@ func makeManualMessage() []blockkit.SlackBlock {
 			},
 			Accessory: &blockkit.ButtonElement{
 				ActionID: ButtonActionForecast,
-				Text: blockkit.TextObject{
-					Type: blockkit.TextTypePlainText,
-					Text: "실행",
-				},
-			},
-		},
-		&blockkit.DividerBlock{},
-		&blockkit.SectionBlock{
-			Text: &blockkit.TextObject{
-				Type: blockkit.TextTypeMarkdown,
-				Text: fmt.Sprintf("*스크럼 작성 이력*    `/자비스 %s`", CommandScrumList),
-			},
-			Accessory: &blockkit.ButtonElement{
-				ActionID: ButtonActionScrumList,
-				Text: blockkit.TextObject{
-					Type: blockkit.TextTypePlainText,
-					Text: "실행",
-				},
-			},
-		},
-		&blockkit.DividerBlock{},
-		&blockkit.SectionBlock{
-			Text: &blockkit.TextObject{
-				Type: blockkit.TextTypeMarkdown,
-				Text: fmt.Sprintf("*스크럼 요약*    `/자비스 %s`", CommandScrumSummary),
-			},
-			Accessory: &blockkit.ButtonElement{
-				ActionID: ButtonActionScrumSummary,
-				Text: blockkit.TextObject{
-					Type: blockkit.TextTypePlainText,
-					Text: "실행",
-				},
-			},
-		},
-		&blockkit.DividerBlock{},
-		&blockkit.SectionBlock{
-			Text: &blockkit.TextObject{
-				Type: blockkit.TextTypeMarkdown,
-				Text: fmt.Sprintf("*채널 알림 설정*    `/자비스 %s`", CommandConfig),
-			},
-			Accessory: &blockkit.ButtonElement{
-				ActionID: ButtonActionConfig,
 				Text: blockkit.TextObject{
 					Type: blockkit.TextTypePlainText,
 					Text: "실행",

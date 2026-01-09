@@ -2,7 +2,6 @@ package app
 
 import (
 	"bytes"
-	"context"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -10,13 +9,9 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
-	"sync"
-	"time"
 
-	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 	"github.com/joyfuldevs/project-jarvis/pkg/slack"
 	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
-	channelconfig "github.com/joyfuldevs/project-jarvis/service/channelconfig/client"
 )
 
 type CommandResponder struct {
@@ -35,12 +30,6 @@ func (c *CommandResponder) RespondCommand() {
 		c.RespondCommandHolidayCalendar()
 	case CommandForecast:
 		c.RespondCommandForecast()
-	case CommandScrumList:
-		c.RespondCommandScrumList()
-	case CommandScrumSummary:
-		c.RespondCommandScrumSummary()
-	case CommandConfig:
-		c.RespondCommandConfig()
 	default:
 		c.RespondCommandUndefined()
 	}
@@ -74,29 +63,6 @@ func (c *CommandResponder) RespondCommandForecast() {
 	})
 }
 
-func (c *CommandResponder) RespondCommandScrumList() {
-	messages := listScrumMessages(c.AppToken, c.BotToken, c.Payload.ChannelID, c.Payload.UserID)
-	Respond(c.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeScrumListMessage(messages),
-		ReplaceOriginal: true,
-	})
-}
-
-func (c *CommandResponder) RespondCommandScrumSummary() {
-	messages := listScrumMessages(c.AppToken, c.BotToken, c.Payload.ChannelID, c.Payload.UserID)
-	Respond(c.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeScrumSummaryMessage(messages),
-		ReplaceOriginal: true,
-	})
-}
-
-func (c *CommandResponder) RespondCommandConfig() {
-	Respond(c.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeConfigMessage(c.Payload.ChannelID),
-		ReplaceOriginal: true,
-	})
-}
-
 func (c *CommandResponder) RespondCommandUndefined() {
 	Respond(c.Payload.ResponseURL, &slack.InteractiveResponsePayload{
 		Blocks:          makeGuideMessage(),
@@ -123,7 +89,6 @@ func (a *ActionResponder) RespondAction(action slack.InteractiveAction) {
 		a.RespondButtonAction(action)
 	case blockkit.ElementTypeSelect:
 		// 셀렉트 액션 처리.
-		a.RespondSelectAction(action)
 	default:
 		slog.Warn("undefined action type", slog.String("type", string(action.Type)))
 	}
@@ -145,31 +110,6 @@ func (a *ActionResponder) RespondButtonAction(action slack.InteractiveAction) {
 		// 날씨 버튼 클릭.
 		a.RespondProgress()
 		a.RespondButtonActionForecast()
-	case ButtonActionScrumList:
-		// 스크럼 목록 버튼 클릭.
-		a.RespondProgress()
-		a.RespondButtonActionScrumList()
-	case ButtonActionScrumSummary:
-		// 스크럼 요약 버튼 클릭.
-		a.RespondProgress()
-		a.RespondButtonActionScrumSummary()
-	case ButtonActionConfig:
-		// 설정 버튼 클릭.
-		a.RespondProgress()
-		a.RespondButtonActionConfig()
-	}
-}
-
-func (a *ActionResponder) RespondSelectAction(action slack.InteractiveAction) {
-	switch action.ActionID {
-	case ConfigActionDailyScrumEnable:
-		// 데일리 스크럼 알림 설정.
-		a.RespondConfigActionDailyScrumEnable(action)
-	case ConfigActionWeeklyReportEnable:
-		// 주간 보고 알림 설정.
-		a.RespondConfigActionWeeklyReportEnable(action)
-	default:
-		slog.Warn("undefined select action", slog.String("action_id", action.ActionID))
 	}
 }
 
@@ -203,59 +143,6 @@ func (a *ActionResponder) RespondButtonActionHolidayCalendar() {
 func (a *ActionResponder) RespondButtonActionForecast() {
 	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
 		Blocks:          makeForecastMessage(),
-		ReplaceOriginal: true,
-	})
-}
-
-func (a *ActionResponder) RespondButtonActionScrumList() {
-	messages := listScrumMessages(a.AppToken, a.BotToken, a.Payload.Container.ChannelID, a.Payload.User.ID)
-	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeScrumListMessage(messages),
-		ReplaceOriginal: true,
-	})
-}
-
-func (a *ActionResponder) RespondButtonActionScrumSummary() {
-	messages := listScrumMessages(a.AppToken, a.BotToken, a.Payload.Container.ChannelID, a.Payload.User.ID)
-	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeScrumSummaryMessage(messages),
-		ReplaceOriginal: true,
-	})
-}
-
-func (a *ActionResponder) RespondButtonActionConfig() {
-	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeConfigMessage(a.Payload.Channel.ID),
-		ReplaceOriginal: true,
-	})
-}
-
-func (a *ActionResponder) RespondConfigActionDailyScrumEnable(action slack.InteractiveAction) {
-	_, err := enableDailyScrumConfig(
-		a.Payload.Container.ChannelID,
-		action.SelectedOption.Value == "on",
-	)
-	if err != nil {
-		slog.Warn("failed to enable daily scrum config")
-	}
-
-	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeConfigMessage(a.Payload.Container.ChannelID),
-		ReplaceOriginal: true,
-	})
-}
-
-func (a *ActionResponder) RespondConfigActionWeeklyReportEnable(action slack.InteractiveAction) {
-	_, err := enableWeeklyReportConfig(
-		a.Payload.Container.ChannelID,
-		action.SelectedOption.Value == "on",
-	)
-	if err != nil {
-		slog.Warn("failed to enable weekly report config")
-	}
-
-	Respond(a.Payload.ResponseURL, &slack.InteractiveResponsePayload{
-		Blocks:          makeConfigMessage(a.Payload.Container.ChannelID),
 		ReplaceOriginal: true,
 	})
 }
@@ -295,88 +182,4 @@ func Respond(url string, payload *slack.InteractiveResponsePayload) {
 	} else {
 		slog.Error("failed to respond", slog.Any("error", errors.New(resp.Status)))
 	}
-}
-
-func listScrumMessages(appToken, botToken, channel, user string) map[float64]string {
-	messageIDs := func() []float64 {
-		client, err := channelconfig.NewClient()
-		if err != nil {
-			slog.Error("failed to create channel config client", slog.Any("error", err))
-			return nil
-		}
-		defer func() {
-			if err := client.Close(); err != nil {
-				slog.Warn("failed to close channel config client", slog.Any("error", err))
-			}
-		}()
-		ids, err := client.GetScrumMessageHistory(context.Background(), channel)
-		if err != nil {
-			slog.Error("failed to get scrum message history", slog.Any("error", err))
-			return nil
-		}
-		// 월요일 이후의 메시지 ID만 반환한다.
-		min := float64(kst.LastWeekday(time.Now(), time.Monday).Unix())
-		result := make([]float64, 0, len(ids))
-		for _, id := range ids {
-			if id >= min {
-				result = append(result, id)
-			}
-		}
-		return result
-	}()
-
-	if len(messageIDs) == 0 {
-		return nil
-	}
-
-	client := slack.Client{
-		AppToken: appToken,
-		BotToken: botToken,
-	}
-
-	// 스크럼 메시지의 스레드에서 요청한 사람이 작성한 메시지를 찾는다.
-	type message struct {
-		ts   float64
-		text string
-	}
-	var (
-		messages = make(map[float64]string, 5)
-		ch       = make(chan message, len(messageIDs))
-	)
-
-	wg := sync.WaitGroup{}
-	for _, id := range messageIDs {
-		wg.Go(func() {
-			req := &slack.ListRepliesRequest{
-				Channel:   channel,
-				Timestamp: id,
-			}
-			resp, err := client.ListReplies(context.Background(), req)
-			if err != nil {
-				slog.Warn("failed to list replies", slog.Any("error", err))
-				return
-			}
-
-			for _, reply := range resp.Messages {
-				if reply.User != user {
-					continue
-				}
-				ch <- message{
-					ts:   id,
-					text: reply.Text,
-				}
-				return
-			}
-		})
-	}
-	go func() {
-		wg.Wait()
-		close(ch)
-	}()
-
-	for msg := range ch {
-		messages[msg.ts] = msg.text
-	}
-
-	return messages
 }
