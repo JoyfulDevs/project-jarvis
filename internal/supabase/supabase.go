@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -85,7 +84,6 @@ func (c *Client) doRequest(ctx context.Context, r apiRequest) ([]byte, error) {
 		query.Set(k, v)
 	}
 	apiURL.RawQuery = query.Encode()
-	fmt.Println(apiURL.String())
 	req, err := http.NewRequestWithContext(ctx, r.method, apiURL.String(), r.body)
 	if err != nil {
 		return nil, err
