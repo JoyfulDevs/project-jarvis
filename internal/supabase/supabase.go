@@ -26,7 +26,7 @@ type Client struct {
 	HTTPClient *http.Client
 }
 
-// GetJarvisSetting retrieves the Jarvis settings for a given channel ID.
+// GetJarvisSetting 는 주어진 채널 ID에 대한 Jarvis 설정을 가져옵니다.
 func (c *Client) GetJarvisSetting(ctx context.Context, channelID string) (*setting.JarvisSetting, error) {
 	data, err := c.doRequest(ctx, apiRequest{
 		method: "GET",
@@ -50,6 +50,7 @@ func (c *Client) GetJarvisSetting(ctx context.Context, channelID string) (*setti
 	return settings[0], nil
 }
 
+// SetJarvisSetting 는 주어진 Jarvis 설정을 저장 하거나 갱신합니다.
 func (c *Client) SetJarvisSetting(ctx context.Context, s *setting.JarvisSetting) error {
 	data, err := json.Marshal(s)
 	if err != nil {
@@ -85,9 +86,10 @@ func (c *Client) doRequest(ctx context.Context, r apiRequest) ([]byte, error) {
 		return nil, err
 	}
 
-	// API key and Auth key headers
+	// API 키와 인증 키를 헤더에 추가
 	req.Header.Add("apikey", c.APIKey)
 	req.Header.Add("Authorization", "Bearer "+c.AuthKey)
+	// 이미 데이터가 있는 경우 UPSERT로 동작 하도록 설정
 	req.Header.Add("Prefer", "resolution=merge-duplicates")
 
 	resp, err := c.HTTPClient.Do(req)
