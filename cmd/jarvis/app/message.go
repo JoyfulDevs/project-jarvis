@@ -10,7 +10,6 @@ import (
 
 	"github.com/joyfuldevs/project-jarvis/pkg/kst"
 	"github.com/joyfuldevs/project-jarvis/pkg/slack/blockkit"
-	aigateway "github.com/joyfuldevs/project-jarvis/service/aigateway/client"
 	dataportal "github.com/joyfuldevs/project-jarvis/service/dataportal/client"
 )
 
@@ -21,42 +20,6 @@ func makeProgressMessage() []blockkit.SlackBlock {
 				Type:  blockkit.TextTypePlainText,
 				Text:  "⏱️ 처리 중입니다. 잠시만 기다려 주세요.",
 				Emoji: true,
-			},
-		},
-	}
-}
-
-func makeConfigOnOffSection(title string, actionID string, on bool) *blockkit.SectionBlock {
-	return &blockkit.SectionBlock{
-		Text: &blockkit.TextObject{
-			Type: blockkit.TextTypeMarkdown,
-			Text: title,
-		},
-		Accessory: &blockkit.SelectElement{
-			ActionID: actionID,
-			Type:     blockkit.ElementTypeSelect,
-			Placeholder: blockkit.TextObject{
-				Type:  blockkit.TextTypePlainText,
-				Text:  map[bool]string{true: "ON", false: "OFF"}[on],
-				Emoji: true,
-			},
-			Options: []blockkit.OptionBlockObject{
-				{
-					Text: blockkit.TextObject{
-						Type:  blockkit.TextTypePlainText,
-						Text:  "ON",
-						Emoji: true,
-					},
-					Value: "on",
-				},
-				{
-					Text: blockkit.TextObject{
-						Type:  blockkit.TextTypePlainText,
-						Text:  "OFF",
-						Emoji: true,
-					},
-					Value: "off",
-				},
 			},
 		},
 	}
@@ -230,90 +193,6 @@ func makeHolidayField(year, month int, calendar map[int]string) *blockkit.TextOb
 	return &blockkit.TextObject{
 		Type: blockkit.TextTypeMarkdown,
 		Text: builder.String(),
-	}
-}
-
-func makeScrumListMessage(messages map[float64]string) []blockkit.SlackBlock {
-	var (
-		keys   = make([]float64, 0, len(messages))
-		fields = make([]blockkit.TextObject, 0, 5)
-		blocks = make([]blockkit.SlackBlock, 0, 8)
-	)
-
-	for key := range messages {
-		keys = append(keys, key)
-	}
-	sort.Float64s(keys)
-
-	for _, key := range keys {
-		message := messages[key]
-		builder := strings.Builder{}
-		builder.WriteString("`")
-		t := kst.KST(time.UnixMilli(int64(key * 1000)))
-		builder.WriteString(kst.Weekday(t))
-		builder.WriteString("요일")
-		builder.WriteString("`\n")
-		builder.WriteString("```")
-		builder.WriteString(message)
-		builder.WriteString("```")
-		fields = append(fields, blockkit.TextObject{
-			Type: blockkit.TextTypeMarkdown,
-			Text: builder.String(),
-		})
-	}
-
-	blocks = append(blocks,
-		&blockkit.HeaderBlock{
-			Text: blockkit.TextObject{
-				Type:  blockkit.TextTypePlainText,
-				Text:  "📝 스크럼 작성 이력",
-				Emoji: true,
-			},
-		},
-		&blockkit.DividerBlock{},
-		&blockkit.SectionBlock{
-			Fields: fields,
-		},
-		&blockkit.DividerBlock{},
-		makeDoneButton(),
-	)
-
-	return blocks
-}
-
-func makeScrumSummaryMessage(messages map[float64]string) []blockkit.SlackBlock {
-	texts := make([]string, 0, len(messages)+1)
-	texts = append(texts, "다음 내용들을 바탕으로 이번주에 작업한 내용을 정확하게 요약해주세요.")
-	for ts, msg := range messages {
-		weekday := kst.Weekday(time.UnixMilli(int64(ts * 1000)))
-		texts = append(texts, weekday+"요일 = "+msg)
-	}
-	client, err := aigateway.NewClient()
-	if err != nil {
-		return makeErrorMessage(err)
-	}
-	result, err := client.GenerateText(context.Background(), texts)
-	if err != nil {
-		slog.Error("failed to generate text", slog.Any("error", err))
-		return makeErrorMessage(err)
-	}
-	return []blockkit.SlackBlock{
-		&blockkit.HeaderBlock{
-			Text: blockkit.TextObject{
-				Type:  blockkit.TextTypePlainText,
-				Text:  "🤖 스크럼 요약",
-				Emoji: true,
-			},
-		},
-		&blockkit.DividerBlock{},
-		&blockkit.SectionBlock{
-			Text: &blockkit.TextObject{
-				Type: blockkit.TextTypeMarkdown,
-				Text: fmt.Sprintf("```%s```", result),
-			},
-		},
-		&blockkit.DividerBlock{},
-		makeDoneButton(),
 	}
 }
 
