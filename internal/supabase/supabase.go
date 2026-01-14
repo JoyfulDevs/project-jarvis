@@ -15,7 +15,8 @@ import (
 )
 
 var (
-	ErrNotFound = errors.New("resource not found")
+	ErrNotFound       = errors.New("resource not found")
+	ErrInvalidSetting = errors.New("invalid jarvis setting")
 )
 
 type Client struct {
@@ -52,6 +53,10 @@ func (c *Client) GetJarvisSetting(ctx context.Context, channelID string) (*setti
 
 // SetJarvisSetting 는 주어진 Jarvis 설정을 저장 하거나 갱신합니다.
 func (c *Client) SetJarvisSetting(ctx context.Context, s *setting.JarvisSetting) error {
+	if s == nil || s.ID == "" {
+		return ErrInvalidSetting
+	}
+
 	data, err := json.Marshal(s)
 	if err != nil {
 		return err
